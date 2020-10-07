@@ -21,16 +21,28 @@ namespace MyWash.Infra.Repositories
                 throw (new ArgumentException(nameof(user)));
             
             _context.Users.Add(user);
+            _context.SaveChanges();
         }
 
         public void Update(User user)
         {
-            throw new NotImplementedException();
+            if (user == null)
+                throw (new ArgumentException(nameof(user)));
+
+            var _user = GetUserById(user.Id);      
+            _user.defineNewPassword(user.Password);
+            _context.SaveChanges();
         }
 
-        public void Delete()
+        public void Delete(User user)
         {
-            throw new NotImplementedException();
+            if (user == null)
+                throw (new ArgumentException(nameof(user)));
+
+            var _user = GetUserById(user.Id);
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+
         }
 
         public IEnumerable<User> GetAll()
@@ -38,7 +50,7 @@ namespace MyWash.Infra.Repositories
             return _context.Users.ToList();
         }
 
-        public User GetUserById(Guid id)
+        public User GetUserById(int id)
         {
             return _context.Users.FirstOrDefault(p => p.Id == id);
         }        
@@ -46,6 +58,6 @@ namespace MyWash.Infra.Repositories
         public bool saveChanges()
         {
             return (_context.SaveChanges() >= 0);
-        }     
+        }        
     }
 }

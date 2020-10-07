@@ -6,11 +6,11 @@ namespace MyWash.Model.Repositories
 {
     public interface IUserRepository
     {
-        User GetUserById(Guid id);
+        User GetUserById(int id);
         IEnumerable<User> GetAll();
         void Create(User user);
         void Update(User user);        
-        void Delete ();
-        bool saveChanges();
+        void Delete (User user);
+        bool saveChanges();        
     }
 }
