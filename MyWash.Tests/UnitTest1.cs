@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MyWash.Model.Entity;
 
 namespace MyWash.Tests
 {
@@ -6,24 +7,19 @@ namespace MyWash.Tests
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1()
+        public void testarQuandoSenhaForVazia()
         {
-            teste teste1 = new teste();
+            User user = new User("Marcos", "narsd@gmai.com", "123");
 
-            Assert.AreEqual(4, teste1.soma());
+            Assert.AreEqual("Senha não pode ser vazia", user.defineNewPassword(""));
         }
-        
-    }
 
-    public class teste
-    {
-        int valor1 = 1;
-        int valor2 = 2;
-
-        public int soma()
+        [TestMethod]
+        public void testarQuandoSenhaForValida()
         {
-            return valor1 + valor2;
+            User user = new User("Marcos", "narsd@gmai.com", "123");
+
+            Assert.AreEqual("Sucesso", user.defineNewPassword("1234"));
         }
     }
-
 }

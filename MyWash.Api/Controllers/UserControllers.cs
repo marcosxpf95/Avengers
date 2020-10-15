@@ -13,6 +13,7 @@ namespace MyWash.Api.Controllers
     {
         private readonly IUserRepository _userRepository;
 
+        //dependency injection
         public UserControllers(IUserRepository userRepository)
         {
             _userRepository = userRepository;
