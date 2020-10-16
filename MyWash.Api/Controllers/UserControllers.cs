@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using MyWash.Infra.Repositories;
 using MyWash.Model.Entity;
 using MyWash.Model.Repositories;
@@ -45,6 +46,22 @@ namespace MyWash.Api.Controllers
             _userRepository.saveChanges();
 
             return Created("", user);
+        }
+
+
+        [HttpPut]
+        public ActionResult<User> AlterUser(User user)
+        {
+            var result = _userRepository.GetUserById(user.Id);
+
+            if (result != null)
+            {
+                _userRepository.Update(user);
+                _userRepository.saveChanges();
+                return Ok(user);
+            }   
+            else
+                return NotFound();
         }
     }
 }
