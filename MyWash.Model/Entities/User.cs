@@ -1,18 +1,13 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyWash.Model.Entity
 {
     public class User
     {        
         public User() { }
-        public User(string name, string email, string password)
-        {
-            this.Name = name;
-            this.Email = email;
-            this.Password = password;
-        }
-
+   
         [Key]
         public int Id { get; set; }
 
@@ -21,6 +16,11 @@ namespace MyWash.Model.Entity
         public string Email { get; set; }
 
         public string Password { get; set; }
+
+        public string Role { get; set; }
+        
+        [NotMapped]
+        public string Token { get; set; }
 
         public string defineNewPassword(string newPassword)
         {

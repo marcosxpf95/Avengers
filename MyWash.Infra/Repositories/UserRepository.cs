@@ -29,9 +29,12 @@ namespace MyWash.Infra.Repositories
             if (user == null)
                 throw (new ArgumentException(nameof(user)));
 
-            var _user = GetUserById(user.Id);      
+            var _user = GetUserById(user.Id);
+            
+            _user.Name = user.Name;
+            _user.Email = user.Email;
             _user.defineNewPassword(user.Password);
-            _context.SaveChanges();
+            _context.SaveChanges();    
         }
 
         public void Delete(User user)
@@ -55,9 +58,16 @@ namespace MyWash.Infra.Repositories
             return _context.Users.FirstOrDefault(p => p.Id == id);
         }        
 
-        public bool saveChanges()
+        public bool SaveChanges()
         {
             return (_context.SaveChanges() >= 0);
-        }        
+        }
+        
+        public User GetUserAuthenticated(string name, string password)
+        {
+            var _user = _context.Users.Where(x => x.Name == name && x.Password == password).FirstOrDefault();
+
+            return _user;
+        }
     }
 }
