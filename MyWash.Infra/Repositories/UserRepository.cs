@@ -33,6 +33,7 @@ namespace MyWash.Infra.Repositories
             
             _user.Name = user.Name;
             _user.Email = user.Email;
+            _user.Role = user.Role;
             _user.defineNewPassword(user.Password);
             _context.SaveChanges();    
         }

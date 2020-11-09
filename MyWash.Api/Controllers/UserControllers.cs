@@ -24,7 +24,7 @@ namespace MyWash.Api.Controllers
         {
             var users = _userRepository.GetAll();
 
-            return Ok(users);S
+            return Ok(users);
         }
 
 
@@ -41,7 +41,7 @@ namespace MyWash.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize("admin")]
+        [AllowAnonymous]
         public ActionResult<User> CreateUser(User user)
         {
             _userRepository.Create(user);
@@ -50,6 +50,21 @@ namespace MyWash.Api.Controllers
             return Created("", user);
         }
 
+        [HttpDelete("{id}")]
+        [Authorize("admin")]
+        public ActionResult<User> DeleteUser(int id)
+        {
+            var result = _userRepository.GetUserById(id);
+
+            if (result != null)
+            {
+                _userRepository.Delete(result);
+                _userRepository.SaveChanges();
+                return Ok(result);
+            }
+            else
+                return NotFound();
+        }
 
         [HttpPut]
         [Authorize("admin")]
